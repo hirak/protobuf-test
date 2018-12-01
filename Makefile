@@ -21,4 +21,4 @@ artifacts/go:
 
 .PHONY: fmt
 fmt:
-	find . -name '*.proto' | xargs -P8 -IXXX clang-format -i XXX
+	find myapp -name '*.proto' | xargs -P8 -IXXX clang-format -i XXX

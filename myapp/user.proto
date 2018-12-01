@@ -27,7 +27,7 @@ message UserList { repeated User users = 1; }
 service UserService {
   rpc Get(GetRequest) returns (User) {
     option (google.api.http) = {
-      get: "user"
+      get : "user"
     };
   }
   rpc List(google.protobuf.Empty) returns (UserList) {}

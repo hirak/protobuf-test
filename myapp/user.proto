@@ -30,7 +30,7 @@ service UserService {
       get : "user"
     };
   }
-  rpc List(google.protobuf.Empty) returns (UserList) {}
+  rpc List(google.protobuf.Empty) returns (UserList);
 }
 
 message GetRequest { uint64 id = 1; }

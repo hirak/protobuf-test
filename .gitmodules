@@ -1,0 +1,6 @@
+[submodule "vendor/github.com/googleapis/googleapis"]
+	path = vendor/github.com/googleapis/googleapis
+	url = git://github.com/googleapis/googleapis.git
+[submodule "vendor/github.com/protocolbuffers/protobuf"]
+	path = vendor/github.com/protocolbuffers/protobuf
+	url = git://github.com/protocolbuffers/protobuf.git

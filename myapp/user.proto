@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package myapp;
 
+import "myapp/errors.proto";
+import "myapp/authz.proto";
 import "google/api/annotations.proto";
 import "google/type/date.proto";
 import "google/protobuf/empty.proto";
@@ -25,12 +27,43 @@ message User {
 message UserList { repeated User users = 1; }
 
 service UserService {
+  option deprecated = false;
+  option (authz) = {
+    require: false
+    description: "ユーザー自身か、adminの権限で操作する必要があります"
+  };
+
   rpc Get(GetRequest) returns (User) {
+    option deprecated = false;
+    option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {
-      get : "user"
+      get : "user/{id}"
+    };
+    option (error) = {
+      code : INVALID_ARGUMENT
+      case : "idの形式がおかしいとき発生します"
+      details : "LocalizedMessage"
+      details : "BadRequest"
+    };
+    option (error) = {
+      code : NOT_FOUND
+      case : "指定されたidのユーザーがいない場合に発生します"
+      details : "LocalizedMessage"
+    };
+    option (error) = {
+      code : PERMISSION_DENIED
+      case : "指定されたidのユーザー本人でないコンテキストでリクエストした場合"
+             "に発生します"
+      details : "LocalizedMessage"
     };
   }
-  rpc List(google.protobuf.Empty) returns (UserList);
+
+  rpc List(google.protobuf.Empty) returns (UserList) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+    option (google.api.http) = {
+      get : "users"
+    };
+  }
 }
 
 message GetRequest { uint64 id = 1; }

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package myapp;
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.ServiceOptions { Authz authz = 12345678; }
+
+message Authz {
+  bool require = 1; // 何か必要なのかどうかを書く
+  string description = 2; // じゃあ具体的に何が必要なのかを自然言語で書く
+}

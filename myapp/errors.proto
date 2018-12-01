@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package myapp;
+
+import "google/protobuf/descriptor.proto";
+import "google/rpc/code.proto";
+
+extend google.protobuf.MethodOptions {
+  // 発生しうるエラーを表示します
+  // TODO: 良い番号を考えるか、protobuf-global-extension-registry@google.com
+  // にメールして
+  // https://github.com/protocolbuffers/protobuf/blob/master/docs/options.md
+  // に乗せてもらう
+  repeated Error error = 123456;
+}
+
+message Error {
+  google.rpc.Code code = 1; // gRPCのステータスコードです
+  string case = 2; // どういう状況で発生するのかの説明を書きます
+  repeated string details =
+      3; // errdetailsとして含まれている可能性がある項目を示します。
+}

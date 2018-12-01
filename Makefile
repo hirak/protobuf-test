@@ -7,15 +7,18 @@ PATHS=-I. -I$(VENDOR)/$(GOOGLEAPIS) -I$(VENDOR)/$(PROTOBUF)
 clean:
 	rm -rf artifacts/{js,php,go}
 
-artifacts/js:
+.PHONY: js
+js:
 	rm -rf $@ && mkdir -p $@
 	find myapp -name '*.proto' | xargs protoc $(PATHS) --js_out=artifacts/js
 
-artifacts/php:
+.PHONY: php
+php:
 	rm -rf $@ && mkdir -p $@
 	find myapp -name '*.proto' | xargs protoc $(PATHS) --php_out=artifacts/php
 
-artifacts/go:
+.PHONY: go
+go:
 	rm -rf $@ && mkdir -p $@
 	find myapp -name '*.proto' | xargs protoc $(PATHS) --plugin=protoc-gen-grpc=`which protoc-gen-go` --go_out=plugins=grpc:artifacts/go
 

@@ -9,17 +9,17 @@ clean:
 
 .PHONY: js
 js:
-	rm -rf $@ && mkdir -p $@
+	rm -rf artifacts/$@ && mkdir -p artifacts/$@
 	find myapp -name '*.proto' | xargs protoc $(PATHS) --js_out=artifacts/js
 
 .PHONY: php
 php:
-	rm -rf $@ && mkdir -p $@
+	rm -rf artifacts/$@ && mkdir -p artifacts/$@
 	find myapp -name '*.proto' | xargs protoc $(PATHS) --php_out=artifacts/php
 
 .PHONY: go
 go:
-	rm -rf $@ && mkdir -p $@
+	rm -rf artifacts/$@ && mkdir -p artifacts/$@
 	find myapp -name '*.proto' | xargs protoc $(PATHS) --plugin=protoc-gen-grpc=`which protoc-gen-go` --go_out=plugins=grpc:artifacts/go
 
 .PHONY: fmt

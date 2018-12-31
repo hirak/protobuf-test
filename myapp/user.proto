@@ -29,8 +29,8 @@ message UserList { repeated User users = 1; }
 service UserService {
   option deprecated = false;
   option (authz) = {
-    require: true
-    description: "ユーザー自身か、adminの権限で操作する必要があります"
+    require : true
+    description : "ユーザー自身か、adminの権限で操作する必要があります"
   };
 
   rpc Get(GetRequest) returns (User) {

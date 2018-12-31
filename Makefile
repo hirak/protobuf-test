@@ -10,12 +10,17 @@ clean:
 .PHONY: js
 js:
 	rm -rf artifacts/$@ && mkdir -p artifacts/$@
-	find myapp -name '*.proto' | xargs protoc $(PATHS) --js_out=artifacts/js
+	find myapp -name '*.proto' | xargs protoc $(PATHS) --js_out=artifacts/$@
 
 .PHONY: php
 php:
 	rm -rf artifacts/$@ && mkdir -p artifacts/$@
-	find myapp -name '*.proto' | xargs protoc $(PATHS) --php_out=artifacts/php
+	find myapp -name '*.proto' | xargs protoc $(PATHS) --php_out=artifacts/$@
+
+.PHONY: cpp
+cpp:
+	rm -rf artifacts/$@ && mkdir -p artifacts/$@
+	find myapp -name '*.proto' | xargs protoc $(PATHS) --cpp_out=artifacts/$@
 
 .PHONY: go
 go:

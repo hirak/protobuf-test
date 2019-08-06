@@ -3,10 +3,12 @@ syntax = "proto3";
 package myapp;
 
 enum Season {
+  option allow_alias = true;
   SEASON_UNKNOWN = 0;
   SPRING = 1;
   SUMMER = 2;
   AUTUMN = 3;
+  FALL = 3;
   WINTER = 4;
 }
 

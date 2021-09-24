@@ -6,7 +6,6 @@ import "myapp/errors.proto";
 import "myapp/authz.proto";
 import "google/api/annotations.proto";
 import "google/type/date.proto";
-import "google/protobuf/empty.proto";
 
 message User {
   uint64 id = 1;
@@ -15,16 +14,27 @@ message User {
   Sex sex = 4;
   uint32 age = 5 [ deprecated = true ];
   google.type.Date birthday = 6;
+  BloodType blood_type = 7;
 
   enum Sex {
     SEX_UNKNOWN = 0;
-    SEX_MALE = 1;
-    SEX_FEMALE = 2;
-    SEX_OTHER = 3;
+    MALE = 1;
+    FEMALE = 2;
+    OTHER = 3;
+  }
+
+  enum BloodType {
+    BLOODTYPE_UNKNOWN = 0;
+    A = 1;
+    B = 2;
+    O = 3;
+    AB = 4;
   }
 }
 
 message UserList { repeated User users = 1; }
+
+message ListRequest { User.BloodType blood_type = 1; }
 
 service UserService {
   option deprecated = false;
@@ -58,7 +68,7 @@ service UserService {
     };
   }
 
-  rpc List(google.protobuf.Empty) returns (UserList) {
+  rpc List(ListRequest) returns (UserList) {
     option idempotency_level = NO_SIDE_EFFECTS;
     option (google.api.http) = {
       get : "users"
